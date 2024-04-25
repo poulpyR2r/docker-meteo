@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+{% block body %}
+<div class="col-9 city">
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <h1>Prévision pour <i>{{ data.city }}</i></h1>
+                    <a href="{{ path('app_city_select', {id:index}) }}" class="btn btn-outline-success">Choisir cette ville</a>
+                </div>
+
+                <div class="city-forecast mb-3">
+                    <img src="{{ asset('images/city1.jpg')}}" alt="{{ data.city }}" class="img-fluid city-forecast__image">
+                    <div class="city-forecast__details">
+                        {# <img src="{{ asset('images/')}}{{ data.weather }}.png"> #}
+                        {# Fonctionne aussi comme ci dessous avec la concatenation de twig #}
+                        <img src="{{ asset('images/' ~ data.weather ~ '.png')}}">
+                        <span>Le {{ data.date }}</span>
+                        <span class="city-forecast__details--degrees">{{ data.min }} &deg;C / {{ data.max }} &deg;C</span>
+                        <span></span>
+                    </div>
+                </div>
+
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda repellendus nisi illum
+                    necessitatibus
+                    officiis, quaerat aspernatur at animi sapiente expedita praesentium dignissimos. Unde iusto eveniet
+                    cum.
+                    Dolorum molestias accusamus vero.</p>
+
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit et eligendi cum officia. Neque
+                    dignissimos veniam libero itaque molestias doloribus delectus, corporis, quia dolores quasi suscipit
+                    maiores sunt? Qui, omnis?</p>
+
+            </div>
+{% endblock %}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome!</title>
+
+    <!-- Balises pour le responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+    <!-- Notre CSS custom -->
+    <link rel="stylesheet" href="{{ asset('css/app.css')}}">
+</head>
+
+<body class="mb-5">
+    <nav class="container py-3 mb-3">
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+            {# Ci dessous je créer une block active_home qui n'a aucune valeur ici dans base, mais qui aura pour valeur 'active' dans index #}
+                <a class="nav-link {% block active_home %}{% endblock %}" href="{{ path('app_main') }}">Accueil</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% block active_mountain %}{% endblock %}" href="{{ path('app_mountain') }}">Montagne</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% block active_beach %}{% endblock %}" href="{{ path('app_beach') }}">Plages</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Minimal responsive + columns -->
+    <main class="container">
+        <div class="row">
+        {% block body %}{% endblock %}
+ <!-- Sidebar (le widget) -->
+            <div class="col-3">
+            {# On créer une variable twig qui s'appelle widgetData qui aura pour valeur les données de la ville choisie #}
+            {# la variable widgetData aura pour valeur l'élément de la session qui a pour nom de clé sessionWeather #}
+            {% set widgetData = app.session.get('sessionWeather') %}
+
+                <!-- Code du widget -->
+                <div id="widget">
+
+                    {# On gère le cas ou ma session est vide (si aucune ville n'a été selectionné) #}
+                    {% if widgetData is not null %}
+                    <!-- Si ville sélectionnée -->
+                    <p><b>{{ widgetData.city }}</b></p>
+                    <p>{{ widgetData.date }}</p>
+                    <p><img src="{{ asset('images/' ~ widgetData.weather ~ '.png') }}"></p>
+                    <p>{{ widgetData.min }}°C / {{ widgetData.max }}°C</p>
+
+                    <!-- Si ville non sélectionnée -->
+                    {# Sinon, si widhetData est null (donc si aucune ville n'est selectionné) #}
+                    {% else %}
+                    <div>Sélectionnez une ville<br>dans la liste de gauche</div>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+version: '3.9'
+services:
+
+  # Composer service
+  composer:
+    image: composer:2.6.5
+    container_name: composer
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: 
+      - bash
+      - -c
+      - "composer install; composer require symfony/runtime"
+    networks:
+      - symfony
+
+  # PHP Symfony service
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: php
+    restart: always
+    volumes:
+      - .:/var/www/html
+    ports:
+      - 8001:80
+    depends_on:
+      - composer
+    networks:
+      - symfony
+
+# Networks to connect services between them
+networks:
+  symfony:
+    driver: bridge

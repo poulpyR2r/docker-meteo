@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+{# Grace a la ligne ci dessous, le block active_home aura pour valeur 'active' ce qui fait que lorsqu'on sera sur la page "index", Accueil sera surligné en bleu #}
+{% block active_home %}active{% endblock %}
+{% block body %}
+<div class="col-9">
+
+                <h1 class="mb-5">Bienvenue sur la météo des villes !</h1>
+
+                {# Ici on créer une boucle avec twig #}
+                {# % for elem in tableau_passés % #}
+                {# index sera le compteur de la boucle #}
+                {# a chaque tour de boucle, index va s'incrementer #}
+                {% for index, data in datas %}
+                    <div class="item item--bg-{{ data.weather }}">
+                        <div class="item--city"><a href="{{ path('app_show',{id:index} ) }}">{{ data.city }}</a></div>
+                        <div class="item--forecast">{{ data.date | date("d-m") }} : {{ data.min }}°C / {{ data.max }}°C</div>
+                        {# Fonctionne aussi avec slice pour la date : data.date | slice(0, 5) #}
+                    </div>
+                {% endfor %}
+                
+            </div>
+{% endblock %}
